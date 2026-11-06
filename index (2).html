@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Pocket of Sunshine ☀️</title>
+<style>
+  :root { --pink:#ffd9e8; --lav:#e8ddff; --cream:#fff9ef; --ink:#55445f; --accent:#ff83ad; }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; min-height:100vh; color:var(--ink);
+    font-family: "Trebuchet MS", system-ui, sans-serif;
+    background: linear-gradient(135deg,#ffe3ed 0%,#eee5ff 52%,#fff0d9 100%);
+    display:grid; place-items:center; padding:24px; overflow-x:hidden;
+  }
+  .sparkle { position:fixed; pointer-events:none; opacity:.55; animation:float 7s ease-in-out infinite; font-size:22px; }
+  @keyframes float { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-22px) rotate(15deg)} }
+  .card {
+    width:min(720px,100%); background:rgba(255,255,255,.82);
+    border:2px solid rgba(255,255,255,.9); border-radius:30px;
+    padding:clamp(22px,5vw,42px); text-align:center;
+    box-shadow:0 22px 70px rgba(122,85,130,.16); backdrop-filter:blur(12px);
+    position:relative;
+  }
+  .eyebrow { letter-spacing:3px; text-transform:uppercase; font-size:11px; font-weight:800; color:#b77c9d; }
+  h1 { font-size:clamp(30px,6vw,48px); line-height:1.08; margin:12px 0; color:#765579; }
+  .sub { line-height:1.7; max-width:520px; margin:0 auto 24px; color:#806d85; }
+  .mascot { font-size:76px; display:inline-block; filter:drop-shadow(0 8px 7px #e9c6dc); animation:bob 2.8s ease-in-out infinite; }
+  @keyframes bob { 0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-9px) rotate(4deg)} }
+  .section-title { margin:25px 0 12px; font-size:16px; font-weight:800; }
+  .moods { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
+  button {
+    border:0; cursor:pointer; font:inherit; font-weight:700; color:#725b79;
+    transition:transform .18s, box-shadow .18s, background .18s;
+  }
+  button:hover { transform:translateY(-3px); box-shadow:0 8px 18px #d9c2dd; }
+  button:focus-visible { outline:3px solid #9d75b5; outline-offset:3px; }
+  .mood {
+    background:#fff; border:1px solid #f2d9e8; border-radius:999px;
+    padding:11px 16px;
+  }
+  .mood[aria-pressed="true"] { background:#ffe1ed; border:2px solid #f49abb; }
+  .message {
+    margin:20px auto 0; padding:20px; min-height:104px; max-width:560px;
+    display:grid; place-items:center; background:linear-gradient(135deg,#fff1f6,#f4efff);
+    border-radius:22px; line-height:1.65; font-size:17px;
+  }
+  .actions { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:18px; }
+  .primary { background:#f58eb2; color:white; border-radius:999px; padding:13px 20px; box-shadow:0 5px 0 #dc7198; }
+  .secondary { background:#eee5ff; border-radius:999px; padding:13px 18px; }
+  .tiny { margin-top:25px; color:#a28ca5; font-size:12px; }
+  .heart { color:#f28caf; }
+  .pop { position:fixed; font-size:22px; pointer-events:none; animation:pop 1.2s ease-out forwards; z-index:5; }
+  @keyframes pop { 0%{opacity:1;transform:translateY(0) scale(.7)} 100%{opacity:0;transform:translateY(-130px) scale(1.5) rotate(25deg)} }
+  .breath { display:none; margin:18px auto 0; padding:16px; max-width:400px; background:#eff8f1; border-radius:20px; }
+  .breath.show { display:block; }
+  .orb { width:76px;height:76px;margin:12px auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#b8e5ce); animation:breathe 8s ease-in-out infinite; }
+  @keyframes breathe { 0%,100%{transform:scale(.75)} 50%{transform:scale(1.25)} }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation:none!important; transition:none!important; } }
+</style>
+</head>
+<body>
+<div class="sparkle" style="top:8%;left:9%">✦</div><div class="sparkle" style="top:17%;right:12%;animation-delay:1s">♡</div>
+<div class="sparkle" style="bottom:12%;left:13%;animation-delay:2s">✧</div><div class="sparkle" style="bottom:9%;right:9%;animation-delay:3s">☁</div>
+<main class="card">
+  <div class="eyebrow">a tiny reminder just for you</div>
+  <div class="mascot" aria-hidden="true">🧸</div>
+  <h1>Hey, sunshine! 🌷</h1>
+  <p class="sub">Welcome to your little pocket of happy. No pressure to be productive, positive, or anything at all. Just take a breath and be wonderfully you.</p>
+
+  <div class="section-title">How's your heart feeling today?</div>
+  <div class="moods" role="group" aria-label="Choose your mood">
+    <button class="mood" data-mood="happy" aria-pressed="false">😊 Happy</button>
+    <button class="mood" data-mood="meh" aria-pressed="false">😶 Meh</button>
+    <button class="mood" data-mood="sad" aria-pressed="false">🥺 A little low</button>
+    <button class="mood" data-mood="stressed" aria-pressed="false">😵 Stressed</button>
+    <button class="mood" data-mood="tired" aria-pressed="false">😴 Tired</button>
+  </div>
+
+  <div class="message" id="message" aria-live="polite">
+    Pick a mood, lovely human. I have a little note waiting for you. 💌
+  </div>
+
+  <div class="actions">
+    <button class="primary" id="surprise">✨ Give me a happy thought</button>
+    <button class="secondary" id="compliment">💗 Compliment me</button>
+    <button class="secondary" id="breathingBtn">🍃 Tiny breathing break</button>
+  </div>
+
+  <div class="breath" id="breath" aria-live="polite">
+    <strong>Let's take one soft minute.</strong>
+    <div class="orb"></div>
+    Breathe in as the circle grows… breathe out as it shrinks. Repeat gently, at your own pace.
+  </div>
+  <div class="tiny">Made with <span class="heart">♥</span> and a whole lot of friendship energy.</div>
+</main>
+<script>
+const notes = {
+  happy: "Awww, keep that sparkle! You deserve every little bit of joy coming your way. Save a piece of today's happiness for a rainy day. 🌈",
+  meh: "It's okay to have an ordinary day. You don't have to turn every moment into something amazing. Existing is enough today. ☁️",
+  sad: "Sending you the gentlest virtual hug. You don't need to pretend you're okay. Take things one tiny step at a time — this feeling doesn't define your whole story. 🫂",
+  stressed: "Pause, unclench your jaw, drop your shoulders. You only need to handle the next small thing, not the whole universe at once. 🌿",
+  tired: "Rest is not a reward you have to earn. Drink a little water, get cosy, and let yourself slow down. You deserve softness too. 💤"
+};
+const happyThoughts = [
+  "Somewhere, someone smiles a little bigger because you exist. 💛",
+  "You have survived every difficult day you've met so far. That's a pretty wonderful record.",
+  "Tiny progress is still progress. Even a slow day counts.",
+  "You are allowed to start again as many times as you need. 🌱",
+  "Your laugh, your ideas, your presence — they make the world a little more you-shaped.",
+  "Imagine how many lovely surprises are still waiting to find you. ✨"
+];
+const compliments = [
+  "You have a lovely kind of magic: the world is a little warmer with you in it. 💗",
+  "You are more capable than your overthinking lets you believe.",
+  "Your effort matters, even when nobody sees the behind-the-scenes bits.",
+  "You deserve the same kindness you so freely give to others.",
+  "You don't need to be perfect to be absolutely wonderful. 🌸"
+];
+const message = document.getElementById('message');
+document.querySelectorAll('.mood').forEach(btn => btn.addEventListener('click', () => {
+  document.querySelectorAll('.mood').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+  message.textContent = notes[btn.dataset.mood];
+  sprinkle(btn);
+}));
+function choose(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+document.getElementById('surprise').addEventListener('click', () => { message.textContent = choose(happyThoughts); sprinkle(document.getElementById('surprise')); });
+document.getElementById('compliment').addEventListener('click', () => { message.textContent = choose(compliments); sprinkle(document.getElementById('compliment')); });
+document.getElementById('breathingBtn').addEventListener('click', () => {
+  const panel = document.getElementById('breath');
+  panel.classList.toggle('show');
+  document.getElementById('breathingBtn').textContent = panel.classList.contains('show') ? '🌼 Hide breathing break' : '🍃 Tiny breathing break';
+});
+function sprinkle(source) {
+  const rect = source.getBoundingClientRect();
+  const symbols = ['💖','✨','🌸','⭐','🫧','💕'];
+  for (let i=0;i<9;i++) {
+    const el = document.createElement('span'); el.className='pop'; el.textContent=choose(symbols);
+    el.style.left=(rect.left + rect.width/2 + (Math.random()*150-75))+'px';
+    el.style.top=(rect.top + window.scrollY)+'px';
+    document.body.appendChild(el); setTimeout(()=>el.remove(),1250);
+  }
+}
+</script>
+</body>
+</html>
